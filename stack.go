@@ -23,6 +23,9 @@ func (s *Stack) Pop() (int, error) {
 }
 
 func (s *Stack) Pop2TopValues() (int, int, error) {
+	if len(s.stack) < 2 {
+		return 0, 0, fmt.Errorf("not enough elements")
+	}
 	first, err := s.Pop()
 	if err != nil {
 		return 0, 0, err
@@ -38,7 +41,7 @@ func (s *Stack) GetStack() []int {
 	return s.stack
 }
 
-func (s *Stack) Top() (int, error) {
+func (s *Stack) Top() (int, error) { //returns top element if exists, else error
 	if s.Empty() {
 		return 0, fmt.Errorf("empty stack")
 	}
@@ -46,7 +49,7 @@ func (s *Stack) Top() (int, error) {
 	return val, nil
 }
 
-func (s *Stack) SecondTop() (int, error) {
+func (s *Stack) SecondTop() (int, error) { // returns second element from top if exists, else error
 	if len(s.stack) < 2 {
 		return 0, fmt.Errorf("stack has less than two arguments")
 	}

@@ -63,7 +63,8 @@ func (e *Evaluator) Process(row string) ([]int, error) {
 	if row[0] == ':' {
 		return e.reserveNewCommand(row)
 	}
-	err := e.parseSentence(strings.Split(row, " "))
+	data := strings.Split(row, " ")
+	err := e.parseSentence(data)
 	if err != nil {
 		return make([]int, 0), err
 	}
@@ -137,12 +138,12 @@ func (e *Evaluator) evaluate(command Command) (bool, error) {
 		if err() != nil {
 			return false, err()
 		}
+		return true, nil
 	} else if command.hasNumberToPush {
 		e.stack.Push(command.NumberToPush)
-	} else {
-		return false, nil
+		return true, nil
 	}
-	return true, nil
+	return false, nil
 }
 
 func (e *Evaluator) makeDefinition(commands []string) ([]int, error) {
